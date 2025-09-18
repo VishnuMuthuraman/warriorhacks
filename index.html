@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WarriorHacks — Westwood HS Virtual Hackathon</title>
+  <meta name="description" content="WarriorHacks — Virtual Hackathon led by Computer Science Club officers from Westwood High School (Austin, Texas) with judges from the University of Texas at Austin. Sept 26–28. Free and fully virtual." />
+  <style>
+    /* ===== Theme (black / orange / blue) ===== */
+    :root{
+      --bg: #0b0f14;          /* near black */
+      --ink: #e5e7eb;         /* light text */
+      --muted: #94a3b8;       /* slate-400 */
+      --border: rgba(255,255,255,0.08);
+      --orange: #f97316;      /* orange-500 */
+      --orange-600:#ea580c;   /* orange-600 */
+      --blue: #2563eb;        /* blue-600 */
+      --ring: rgba(37, 99, 235, .45);
+      --card: rgba(255,255,255,0.035);
+    }
+
+    /* ===== Base ===== */
+    html, body { margin:0; padding:0; color:var(--ink); background:var(--bg); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; line-height:1.55; }
+    a { color: #93c5fd; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 1rem; position: relative; z-index: 1; }
+
+    /* ===== Moving background layer ===== */
+    #bg { position: fixed; inset:0; z-index: 0; background: var(--bg); }
+    #bgfx { width:100%; height:100%; display:block; }
+    .bg-vignette { position:absolute; inset:0; pointer-events:none; background: radial-gradient(120% 100% at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,.25) 60%, rgba(0,0,0,.7) 100%); }
+
+    /* ===== Header ===== */
+    header { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); background: rgba(11,15,20,.55); border-bottom: 1px solid var(--border); }
+    .nav { display:flex; align-items:center; justify-content:space-between; padding: .9rem 0; }
+    .brand { display:flex; align-items:center; gap:.6rem; font-weight:800; letter-spacing:-.01em; color:var(--ink); }
+    .navlinks a{ color:var(--ink); padding:.5rem .75rem; border-radius:.5rem; }
+    .navlinks a:hover{ background:rgba(255,255,255,.06); text-decoration:none; }
+    .btn { display:inline-flex; align-items:center; gap:.5rem; padding:.65rem 1rem; border-radius: 999px; border:1px solid var(--border); background:rgba(255,255,255,.04); cursor:pointer; font-weight:600; color:var(--ink); }
+    .btn.brand { background: var(--orange); color: #111827; border-color: transparent; }
+    .btn.brand:hover { background: var(--orange-600); color: #fff; }
+
+    /* ===== Sections ===== */
+    section { padding: 3rem 0; border-top:1px solid var(--border); }
+    .hero { padding: 4rem 0 3rem; border-top:0; }
+    .title { font-size: clamp(2rem, 4vw, 3.25rem); line-height:1.1; font-weight: 900; letter-spacing:-.02em; }
+    .muted { color: var(--muted); }
+
+    .grid { display:grid; gap: 1.25rem; }
+    .two-col { grid-template-columns: 1.1fr .9fr; align-items:center; }
+    @media (max-width: 900px){ .two-col{ grid-template-columns: 1fr; } }
+
+    .cards { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 1rem; }
+    .card { background: var(--card); border:1px solid var(--border); border-radius: .875rem; padding: 1rem 1.1rem; box-shadow: inset 0 1px 0 rgba(255,255,255,0.03); }
+
+    /* ===== Lists (no emojis) ===== */
+    .clean-list { margin:.75rem 0 0; padding-left:1.15rem; }
+    .clean-list li { margin:.35rem 0; }
+
+    /* ===== Form ===== */
+    form { display:grid; gap: 1rem; background: rgba(255,255,255,0.045); border:1px solid var(--border); border-radius:.875rem; padding:1.25rem; backdrop-filter: blur(2px); }
+    .row { display:grid; gap:1rem; }
+    .row.two{ grid-template-columns: 1fr 1fr; }
+    .row.three{ grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 800px){ .row.two, .row.three{ grid-template-columns: 1fr; } }
+
+    label { font-size:.95rem; font-weight:600; display:block; }
+    .req { color:#fca5a5; }
+    input, select, textarea { width:100%; box-sizing:border-box; padding:.65rem .75rem; border-radius:.6rem; border:1px solid var(--border); background:#0f1624; color:var(--ink); font-size:1rem; }
+    input::placeholder, textarea::placeholder { color:#64748b; }
+    input:focus, select:focus, textarea:focus { outline: none; box-shadow: 0 0 0 4px var(--ring); border-color: var(--blue); }
+
+    .chips { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .chip { border:1px solid var(--border); padding:.35rem .65rem; border-radius:999px; background:#0f1624; }
+
+    .consents { display:flex; flex-direction:column; gap:.6rem; }
+    .consent { display:flex; align-items:flex-start; gap:.6rem; max-width: 70ch; }
+    .consent input[type="checkbox"]{ width:1.05rem; height:1.05rem; margin-top:.2rem; }
+
+    .note { font-size:.95rem; color:#cbd5e1; }
+    .success { color:#22c55e; background:rgba(34,197,94,.1); border:1px solid rgba(34,197,94,.25); padding:.75rem; border-radius:.6rem; }
+    .error { color:#f87171; background:rgba(248,113,113,.08); border:1px solid rgba(248,113,113,.25); padding:.75rem; border-radius:.6rem; }
+
+    .hidden { display:none !important; }
+
+    /* ===== Footer ===== */
+    .footer { padding: 2rem 0; border-top:1px solid var(--border); color:#9aa5b1; font-size: .95rem; }
+
+    /* ===== Simple Logo (inline SVG) ===== */
+    .logo svg{ display:block; }
+  </style>
+</head>
+<body>
+  <!-- Animated background -->
+  <div id="bg" aria-hidden="true">
+    <canvas id="bgfx"></canvas>
+    <div class="bg-vignette"></div>
+  </div>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">
+          <!-- Minimal W mark with orange/blue accents for dark mode -->
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="28" height="28" rx="6" stroke="var(--blue)" stroke-width="2"/>
+            <path d="M7 9l4 14 5-10 5 10 4-14" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span>WarriorHacks</span>
+      </div>
+      <nav class="navlinks" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#judging">Judging</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSf5PMYYeRM7aLFbTjnfqFbHkU4aBQemygXBsOevnIR8VlmY1Q/viewform?usp=header" class="btn brand" target="_blank" rel="noopener">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="grid two-col">
+          <div>
+            <h1 class="title">Join us for a weekend of innovation</h1>
+            <p class="muted" style="font-size:1.125rem; max-width:65ch;">
+              Virtual hackathon led by <strong>Computer Science Club officers from Westwood High School (Austin, Texas)</strong> with
+              <strong> judges from the University of Texas at Austin</strong>. Collaborate across CS and Business to solve an exciting challenge.
+            </p>
+            <div class="grid cards" style="margin-top:1rem;">
+              <div class="card"><div class="muted">Date</div><div style="font-weight:700;">Sep 26–28</div></div>
+              <div class="card"><div class="muted">Format</div><div style="font-weight:700;">100% Virtual</div></div>
+              <div class="card"><div class="muted">Hosted By</div><div style="font-weight:700;">Westwood HS CS Club</div></div>
+            </div>
+            <div style="margin-top:1rem; display:flex; gap:.75rem; align-items:center; flex-wrap:wrap;">
+              <span class="chip" style="background:rgba(255,255,255,.05);">Free to join — $0 registration</span>
+              <span class="chip" style="background:rgba(249,115,22,.12); color:#fed7aa; border-color:rgba(249,115,22,.25);">Theme announced Sept 26</span>
+            </div>
+            <div style="margin-top:1.25rem; display:flex; gap:.75rem; align-items:center;">
+              <a class="btn brand" href="https://docs.google.com/forms/d/e/1FAIpQLSf5PMYYeRM7aLFbTjnfqFbHkU4aBQemygXBsOevnIR8VlmY1Q/viewform?usp=header" target="_blank" rel="noopener">Register Now</a>
+              <a class="btn" href="#about" style="border-color:rgba(255,255,255,.18);">Learn more</a>
+            </div>
+          </div>
+          <div>
+            <div class="card" style="background:rgba(255,255,255,.03);">
+              <div style="font-weight:700;">What to expect</div>
+              <ul class="clean-list">
+                <li>Opening Ceremony & Theme Reveal — <strong>Thu, Sep 26</strong></li>
+                <li>Team formation and mentorship hours</li>
+                <li>48 hours of building</li>
+                <li>Judging by the <strong>UT Austin</strong> panel</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2>About the event</h2>
+        <p class="muted" style="max-width:75ch; margin-top:.75rem;">
+          This student‑led event invites high schoolers and early undergraduates to collaborate and build digital prototypes in just 48 hours. The exact challenge theme will be unveiled during the opening ceremony on <strong>September 26</strong>. Expect to use web, mobile, or AI tools to demonstrate your ideas. Collaboration between <strong>Computer Science</strong> and <strong>Business</strong> participants is encouraged.
+        </p>
+        <div class="grid cards">
+          <div class="card"><strong>Who’s organizing?</strong><br/>Computer Science Club officers at Westwood High School in Austin, Texas. Judges from the University of Texas at Austin.</div>
+          <div class="card"><strong>When & where?</strong><br/>September 26–28 · Online (Central Time)</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="schedule">
+      <div class="container">
+        <h2>Schedule (Central Time)</h2>
+        <div class="grid schedule" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top:1rem;">
+          <div class="card">
+            <div style="font-weight:700;">Thursday · Sep 26</div>
+            <div class="muted" style="margin-top:.25rem;">6:00 PM — Opening Ceremony & Theme Reveal</div>
+            <div class="muted">7:30 PM — Team Formation + Mentorship Office Hours</div>
+          </div>
+          <div class="card">
+            <div style="font-weight:700;">Friday · Sep 27</div>
+            <div class="muted" style="margin-top:.25rem;">All Day — Hacking + Workshops</div>
+            <div class="muted">8:00 PM — Checkpoint Demos (optional)</div>
+          </div>
+          <div class="card">
+            <div style="font-weight:700;">Saturday · Sep 28</div>
+            <div class="muted" style="margin-top:.25rem;">12:00 PM — Submissions Due</div>
+            <div class="muted">1:30 PM — Final Demos & Judging (UT Austin panel)</div>
+            <div class="muted">3:30 PM — Awards & Closing</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="judging">
+      <div class="container">
+        <h2>Judging criteria</h2>
+        <div class="grid cards">
+          <div class="card"><strong>Impact (25%)</strong><br/><span class="muted">Addresses a meaningful problem; clear audience & value.</span></div>
+          <div class="card"><strong>Feasibility (25%)</strong><br/><span class="muted">Technically achievable and sustainable beyond the weekend.</span></div>
+          <div class="card"><strong>User Experience (25%)</strong><br/><span class="muted">Accessible, intuitive, and user‑friendly.</span></div>
+          <div class="card"><strong>Technical Craft (25%)</strong><br/><span class="muted">Architecture, code quality, originality, innovation.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <h2>FAQ</h2>
+        <div class="grid cards">
+          <div class="card"><strong>Who can participate?</strong><br/><span class="muted">Open to high school students and early undergraduates worldwide. Beginners welcome.</span></div>
+          <div class="card"><strong>How many per team?</strong><br/><span class="muted">Teams of up to 4 recommended. Solo builders welcome too.</span></div>
+          <div class="card"><strong>What can we build?</strong><br/><span class="muted">Any digital prototype aligned with the theme revealed on Sept 26.</span></div>
+          <div class="card"><strong>How do we submit?</strong><br/><span class="muted">GitHub repo + 2–3 minute demo video + short write‑up describing problem, users, and impact.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="register">
+      <div class="container">
+        <h2>Register (Free)</h2>
+        <p class="note">Registration is handled on Google Forms. The event is free and fully virtual.</p>
+        <p style="margin-top:1rem;">
+          <a class="btn brand" href="https://docs.google.com/forms/d/e/1FAIpQLSf5PMYYeRM7aLFbTjnfqFbHkU4aBQemygXBsOevnIR8VlmY1Q/viewform?usp=header" target="_blank" rel="noopener">Open Registration Form</a>
+        </p>
+        <div class="note" style="margin-top:.75rem;">Questions? Email <a href="mailto:wwhscomputerscience@gmail.com">wwhscomputerscience@gmail.com</a>.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container" style="display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+      <div>© <span id="year"></span> Westwood High School Computer Science Club · Austin, Texas</div>
+      <div style="display:flex; gap:.5rem;">
+        <a href="#">Code of Conduct</a>
+        <span>·</span>
+        <a href="#">Sponsor</a>
+        <span>·</span>
+        <a href="mailto:wwhscomputerscience@gmail.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ================= Moving additive gradient background =================
+       Colors restricted to blue/orange family on a black base. Lightweight and
+       runs on a single <canvas>. Respects prefers-reduced-motion. */
+    (function(){
+      const canvas = document.getElementById('bgfx');
+      const ctx = canvas.getContext('2d', { alpha: true });
+      let w, h, dpr;
+
+      function resize(){
+        dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+        w = canvas.clientWidth; h = canvas.clientHeight;
+        canvas.width = Math.floor(w * dpr); canvas.height = Math.floor(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      window.addEventListener('resize', resize, { passive: true }); resize();
+
+      const colors = [
+        { r:37, g:99, b:235 },   // blue
+        { r:249, g:115, b:22 }   // orange
+      ];
+      const blobs = [
+        { r: 320, t: 0.0,  speed: 0.6, c: 0 },
+        { r: 360, t: 1.3,  speed: 0.5, c: 1 },
+        { r: 280, t: 2.1,  speed: 0.7, c: 0 },
+        { r: 260, t: 3.4,  speed: 0.45, c: 1 }
+      ];
+
+      let reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function frame(ts){
+        ctx.clearRect(0,0,w,h);
+        // base fill
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = '#0b0f14';
+        ctx.fillRect(0,0,w,h);
+        // additive blobs
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i=0;i<blobs.length;i++){
+          const b = blobs[i];
+          const t = (ts*0.001) * b.speed + b.t;
+          const px = (Math.sin(t*0.9) * 0.45 + 0.5) * w;
+          const py = (Math.cos(t*1.1) * 0.35 + 0.5) * h;
+          const col = colors[b.c];
+          const grd = ctx.createRadialGradient(px, py, 0, px, py, b.r);
+          grd.addColorStop(0.0, `rgba(${col.r},${col.g},${col.b},0.65)`);
+          grd.addColorStop(0.4, `rgba(${col.r},${col.g},${col.b},0.25)`);
+          grd.addColorStop(1.0, `rgba(${col.r},${col.g},${col.b},0.0)`);
+          ctx.fillStyle = grd;
+          ctx.beginPath(); ctx.arc(px, py, b.r, 0, Math.PI*2); ctx.fill();
+        }
+        // darken overlay for legibility
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = 'rgba(0,0,0,0.32)';
+        ctx.fillRect(0,0,w,h);
+        if (!reduce) requestAnimationFrame(frame);
+      }
+      if (!reduce) requestAnimationFrame(frame); else frame(0);
+    })();
+  </script>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
