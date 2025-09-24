@@ -88,6 +88,37 @@
 
     /* ===== Simple Logo (inline SVG) ===== */
     .logo svg{ display:block; }
+
+    /* ===== Sponsors Section (updated for contrast) ===== */
+    #sponsors {
+      background: rgba(255,255,255,0.05);
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    #sponsors h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+    .sponsors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2.5rem;
+      align-items: center;
+      justify-items: center;
+      margin-top: 1.5rem;
+    }
+    .sponsors-grid img {
+      max-height: 70px;
+      max-width: 100%;
+      object-fit: contain;
+      background: #ffffff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.25);
+    }
   </style>
 </head>
 <body>
@@ -228,6 +259,20 @@
         <div class="note" style="margin-top:.75rem;">Questions? Email <a href="mailto:wwhscomputerscience@gmail.com">wwhscomputerscience@gmail.com</a>.</div>
       </div>
     </section>
+
+    <section id="sponsors">
+      <div class="container">
+        <h2>Our Sponsors</h2>
+        <div class="grid sponsors-grid">
+          <img src="CodeCrafters.png" alt="CodeCrafters">
+          <img src="0.png" alt="AoPS">
+          <img src="Drawing-8.sketchpad.png" alt="CleanShot">
+          <img src="interviewbuddy-Gqjc_7d7.png" alt="Interview Buddy">
+          <img src="Drawing-12.sketchpad.png" alt="UniBee">
+          <img src="balsamiq_logomark.png" alt="Balsamiq">
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -270,7 +315,6 @@
         { r: 280, t: 2.1,  speed: 0.7, c: 0 },
         { r: 260, t: 3.4,  speed: 0.45, c: 1 }
       ];
-
       let reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       function frame(ts){
         ctx.clearRect(0,0,w,h);
